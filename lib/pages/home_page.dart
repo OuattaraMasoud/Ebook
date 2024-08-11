@@ -3,6 +3,8 @@ import 'package:dio/dio.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:tuto/models/models.dart';
+import 'package:tuto/pages/pages.dart';
+import 'package:tuto/widgets/book_widget.dart';
 
 class MyHomePage extends StatefulWidget {
   const MyHomePage({super.key});
@@ -56,12 +58,18 @@ class _MyHomePageState extends State<MyHomePage> {
         padding: const EdgeInsets.symmetric(horizontal: 10.0),
         child: CustomScrollView(
           slivers: [
-            const SliverAppBar(
+            SliverAppBar(
               pinned: true,
               title: Text(
                 "Flutter Ebook App",
                 style: TextStyle(fontSize: 25),
               ),
+              actions: [
+                IconButton(
+                    onPressed: () => Navigator.push(context,
+                        MaterialPageRoute(builder: (context) => LoginPage())),
+                    icon: Icon(Icons.logout))
+              ],
             ),
             SliverToBoxAdapter(
               child: _books.isNotEmpty
@@ -72,17 +80,12 @@ class _MyHomePageState extends State<MyHomePage> {
                           scrollDirection: Axis.horizontal,
                           itemCount: _books.length,
                           itemBuilder: (context, index) {
-                            return Container(
-                                padding: const EdgeInsets.all(5),
-                                margin: const EdgeInsets.all(5),
-                                height: 250,
-                                width: 150,
-                                decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(20),
-                                  image: DecorationImage(
-                                      image: NetworkImage(
-                                          _books[index].coverImage)),
-                                ));
+                            return BookWidget(
+                                book: _books[index],
+                                mainContainerWidth: 150,
+                                mainContainerHeight: 250,
+                                positionedContainerWidth: 150,
+                                positionedContainerHeight: 75);
                           }),
                     )
                   : const SizedBox(
@@ -143,16 +146,12 @@ class _MyHomePageState extends State<MyHomePage> {
                         padding: const EdgeInsets.symmetric(vertical: 10.0),
                         child: Row(
                           children: [
-                            Container(
-                              height: 150,
-                              width: 100,
-                              decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(15),
-                                  image: DecorationImage(
-                                      fit: BoxFit.cover,
-                                      image: NetworkImage(
-                                          _books[index].coverImage))),
-                            ),
+                            BookWidget(
+                                book: _books[index],
+                                mainContainerWidth: 100,
+                                mainContainerHeight: 150,
+                                positionedContainerWidth: 100,
+                                positionedContainerHeight: 50),
                             Padding(
                               padding: const EdgeInsets.only(left: 20.0),
                               child: Column(

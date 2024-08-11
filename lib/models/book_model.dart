@@ -2,8 +2,8 @@ class BookModel {
   final int id;
   final String title;
   final String author;
-  final int publicationYear;
-  final List<dynamic> genre;
+  final dynamic publicationYear;
+  final dynamic genre;
   final String description;
   final String coverImage;
   const BookModel({
